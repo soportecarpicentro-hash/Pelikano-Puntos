@@ -644,11 +644,7 @@ function renderTable() {
     const p4 = d.pts4>0 ? `<span class="pill pill-4">4pts ×${Math.round(d.units4||0)}u</span>` : '';
     const p8 = d.pts8>0 ? `<span class="pill pill-8">8pts ×${Math.round(d.units8||0)}u</span>` : '';
     const av = Math.max(0, d.total-(d.redeemed||0));
-    const clientRdm = {};
-    state.redemptions.filter(r => r.client === name).forEach(r => { clientRdm[r.prizeEmoji] = (clientRdm[r.prizeEmoji]||0) + r.qty; });
-    const rdmText = Object.entries(clientRdm).map(([emoji, qty]) => `${emoji}×${qty}`).join(' ');
-    const rdmLine = rdmText ? `<div style="font-size:10px;color:var(--gold-light);margin-top:3px;opacity:0.85">${rdmText} canjeado</div>` : '';
-    return `<tr><td style="width:42px;text-align:center">${rd}</td><td><div class="client-name">${name}</div>${rdmLine}</td><td>${p4}${p8}</td><td style="text-align:right"><div class="points-val">${Math.round(d.total).toLocaleString('es')}</div><div class="points-label">TOTAL</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div><div class="points-label">DISPONIBLE</div></td></tr>`;
+    return `<tr><td style="width:42px;text-align:center">${rd}</td><td><div class="client-name">${name}</div></td><td>${p4}${p8}</td><td style="text-align:right"><div class="points-val">${Math.round(d.total).toLocaleString('es')}</div><div class="points-label">TOTAL</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div><div class="points-label">DISPONIBLE</div></td></tr>`;
   }).join('');
   document.getElementById('tableContainer').innerHTML = `<table class="ranking-table"><thead><tr><th style="text-align:center">#</th><th>Razón Social</th><th>Detalle</th><th class="right">Puntos totales</th><th class="right">Disponibles</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
@@ -659,19 +655,11 @@ function renderPrizesTable() {
   if (entries.length === 0) { document.getElementById('prizesTableContainer').innerHTML = `<div class="empty-state" style="padding:36px"><div class="empty-text">Sin datos</div></div>`; return; }
   const rows = entries.map(([name, d]) => {
     const av = Math.max(0, d.total-(d.redeemed||0));
+    const cA = Math.floor(av/30), cB = Math.floor(av/30), cBt = Math.floor(av/20);
     const safeName = name.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
-    const clientRdm = {};
-    state.redemptions.filter(r => r.client === name).forEach(r => {
-      if (!clientRdm[r.prizeName]) clientRdm[r.prizeName] = { emoji: r.prizeEmoji, qty: 0 };
-      clientRdm[r.prizeName].qty += r.qty;
-    });
-    const rdmParts = Object.entries(clientRdm).map(([pname, p]) =>
-      `<span style="display:inline-flex;align-items:center;gap:3px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:4px;padding:2px 7px;margin:2px;font-size:11px;color:var(--gold)">${p.emoji} ${pname} <strong>×${p.qty}</strong></span>`
-    ).join('');
-    const rdmCell = rdmParts || `<span style="color:var(--text-muted);font-size:12px">Sin canjes</span>`;
-    return `<tr><td><div class="client-name">${name}</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div></td><td style="max-width:260px">${rdmCell}</td><td style="text-align:right"><button class="btn btn-gold btn-sm" onclick="openModalForClient('${safeName}')">Canjear</button></td></tr>`;
+    return `<tr><td><div class="client-name">${name}</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div></td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cA>0?'🇦🇷 ×'+cA:'—'}</td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cB>0?'🇧🇷 ×'+cB:'—'}</td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cBt>0?'🍶 ×'+cBt:'—'}</td><td style="text-align:right"><button class="btn btn-gold btn-sm" onclick="openModalForClient('${safeName}')">Canjear</button></td></tr>`;
   }).join('');
-  document.getElementById('prizesTableContainer').innerHTML = `<table class="ranking-table"><thead><tr><th>Razón Social</th><th class="right">Pts disponibles</th><th>Premios ya canjeados</th><th class="right">Acción</th></tr></thead><tbody>${rows}</tbody></table>`;
+  document.getElementById('prizesTableContainer').innerHTML = `<table class="ranking-table"><thead><tr><th>Razón Social</th><th class="right">Pts disponibles</th><th class="center">🇦🇷 Arg (30)</th><th class="center">🇧🇷 Bra (30)</th><th class="center">🍶 Bot (20)</th><th class="right">Acción</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 function renderPrizeCards() {
