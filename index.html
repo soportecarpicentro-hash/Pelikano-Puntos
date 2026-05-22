@@ -225,7 +225,7 @@
       <div class="import-icon">📂</div>
       <div class="import-text">
         <h3>Importar lista de ventas</h3>
-        <p>Archivo Excel diario (.xlsx) · Solo cuenta filas con % de comisión = 0.0015</p>
+        <p>Archivo Excel diario (.xlsx) · Solo filas con <strong style="color:var(--gold)">Tipo de Venta = VS</strong> y los 14 códigos de producto registrados</p>
       </div>
       <div class="import-actions">
         <input type="file" id="fileInput" accept=".xlsx,.xls">
@@ -318,7 +318,7 @@
         <div><div style="font-size:32px;margin-bottom:6px">🍶</div><div style="color:var(--text);font-weight:500;font-size:14px">Botella Pelikano</div><div style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:22px">20 puntos</div></div>
       </div>
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);">
-        Solo se contabilizan filas donde <strong style="color:var(--text)">% DE COMISIÓN = 0.0015</strong> para los 14 códigos indicados.
+        Solo se contabilizan filas donde <strong style="color:var(--text)">TIPO DE VENTA = VS</strong> y <strong style="color:var(--text)">% DE COMISIÓN = 0.0015</strong> para los 14 códigos indicados.
       </div>
     </div>
   </div>
@@ -521,6 +521,7 @@ async function processFile(rows, filename) {
         if (h.includes('CANTIDAD'))            colMap.qt = idx;
         if (h.includes('FECHA'))               colMap.fe = idx;
         if (h.includes('COMISI'))              colMap.co = idx;
+        if (h.includes('TIPO DE VENTA') || h.includes('TIPO VENTA') || h === 'TV') colMap.tv = idx;
       });
       break;
     }
@@ -541,6 +542,8 @@ async function processFile(rows, filename) {
     const comision = colMap.co !== undefined ? parseFloat(row[colMap.co]) : null;
 
     if (!razon || cantidad <= 0) continue;
+    const tipoVenta = colMap.tv !== undefined ? String(row[colMap.tv] || '').trim().toUpperCase() : null;
+    if (tipoVenta !== null && tipoVenta !== 'VS') { skipped++; continue; }
     if (comision !== null && Math.abs(comision - REQ_COM) > 0.000001) { skipped++; continue; }
 
     let pts = 0, type = null;
@@ -653,13 +656,20 @@ function renderPrizesTable() {
   const q = document.getElementById('searchPremios').value.toLowerCase();
   const entries = Object.entries(state.clients).filter(([n]) => n.toLowerCase().includes(q)).sort((a,b) => Math.max(0,b[1].total-(b[1].redeemed||0)) - Math.max(0,a[1].total-(a[1].redeemed||0)));
   if (entries.length === 0) { document.getElementById('prizesTableContainer').innerHTML = `<div class="empty-state" style="padding:36px"><div class="empty-text">Sin datos</div></div>`; return; }
+  // Canjes reales por cliente y tipo de premio
+  const rByClient = {};
+  state.redemptions.forEach(r => {
+    if (!rByClient[r.client]) rByClient[r.client] = {};
+    rByClient[r.client][r.prizeId] = (rByClient[r.client][r.prizeId] || 0) + r.qty;
+  });
   const rows = entries.map(([name, d]) => {
     const av = Math.max(0, d.total-(d.redeemed||0));
-    const cA = Math.floor(av/30), cB = Math.floor(av/30), cBt = Math.floor(av/20);
+    const cr = rByClient[name] || {};
+    const cA = cr[0] || 0, cB = cr[1] || 0, cBt = cr[2] || 0;
     const safeName = name.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
     return `<tr><td><div class="client-name">${name}</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div></td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cA>0?'🇦🇷 ×'+cA:'—'}</td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cB>0?'🇧🇷 ×'+cB:'—'}</td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cBt>0?'🍶 ×'+cBt:'—'}</td><td style="text-align:right"><button class="btn btn-gold btn-sm" onclick="openModalForClient('${safeName}')">Canjear</button></td></tr>`;
   }).join('');
-  document.getElementById('prizesTableContainer').innerHTML = `<table class="ranking-table"><thead><tr><th>Razón Social</th><th class="right">Pts disponibles</th><th class="center">🇦🇷 Arg (30)</th><th class="center">🇧🇷 Bra (30)</th><th class="center">🍶 Bot (20)</th><th class="right">Acción</th></tr></thead><tbody>${rows}</tbody></table>`;
+  document.getElementById('prizesTableContainer').innerHTML = `<table class="ranking-table"><thead><tr><th>Razón Social</th><th class="right">Pts disponibles</th><th class="center">🇦🇷 Canjeadas</th><th class="center">🇧🇷 Canjeadas</th><th class="center">🍶 Canjeadas</th><th class="right">Acción</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 function renderPrizeCards() {
