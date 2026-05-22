@@ -498,8 +498,12 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
   reader.onload = ev => {
     try {
       const wb = XLSX.read(ev.target.result, { type: 'array', cellDates: true });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      processFile(XLSX.utils.sheet_to_json(ws, { header: 1, defval: null }), file.name);
+      let allRows = [];
+      wb.SheetNames.forEach(sheetName => {
+        const ws = wb.Sheets[sheetName];
+        allRows = allRows.concat(XLSX.utils.sheet_to_json(ws, { header: 1, defval: null }));
+      });
+      processFile(allRows, file.name);
     } catch(err) { showToast('Error al leer el archivo: ' + err.message, 'error'); }
   };
   reader.readAsArrayBuffer(file);
