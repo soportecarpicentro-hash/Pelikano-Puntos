@@ -13,17 +13,16 @@
     --bg: #0F0E0C; --surface: #1A1914; --surface2: #232118; --surface3: #2E2B22;
     --border: rgba(201,168,76,0.18); --border2: rgba(201,168,76,0.35);
     --text: #F5F0E8; --text-muted: #9A9080; --red: #E05A4A; --green: #5BA87A;
+    --univ: #4A90D9; --indep: #D9844A;
   }
   body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
-  /* LOADING OVERLAY */
   #loadingOverlay { position:fixed; inset:0; background:var(--bg); z-index:999; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; transition: opacity 0.3s; }
   #loadingOverlay.hidden { opacity:0; pointer-events:none; }
   .loading-spinner { width:36px; height:36px; border:3px solid var(--border2); border-top-color:var(--gold); border-radius:50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-text { font-size:13px; color:var(--text-muted); letter-spacing:1px; }
 
-  /* CONFIG BANNER */
   #configBanner { background: rgba(224,90,74,0.12); border: 1px solid rgba(224,90,74,0.4); border-radius:10px; padding:18px 22px; margin-bottom:20px; display:none; }
   #configBanner h3 { color:var(--red); font-size:14px; font-weight:600; margin-bottom:8px; }
   #configBanner p { font-size:12px; color:var(--text-muted); line-height:1.6; }
@@ -66,6 +65,13 @@
   .btn-danger:hover { background: rgba(224,90,74,0.1); }
   .btn-sm { padding: 5px 10px; font-size: 12px; }
 
+  /* Botones de sede */
+  .sede-btns { display: flex; gap: 8px; }
+  .btn-sede { padding: 5px 14px; border-radius: 7px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; border: 1px solid var(--border2); background: transparent; color: var(--text-muted); transition: all 0.15s; }
+  .btn-sede:hover { color: var(--text); border-color: var(--border2); }
+  .btn-sede.active-univ { background: rgba(74,144,217,0.15); border-color: var(--univ); color: var(--univ); font-weight: 600; }
+  .btn-sede.active-indep { background: rgba(217,132,74,0.15); border-color: var(--indep); color: var(--indep); font-weight: 600; }
+
   .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
   .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; color: var(--gold); }
 
@@ -101,7 +107,6 @@
   .log-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 3px 9px; font-size: 11px; color: var(--text-muted); }
   .log-badge span { color: var(--gold); font-weight: 600; }
 
-  /* PRIZES */
   .prizes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 22px; }
   .prize-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 16px; text-align: center; transition: border-color 0.2s; }
   .prize-card:hover { border-color: var(--border2); }
@@ -111,7 +116,6 @@
   .prize-cost-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 10px; }
   .prize-redeemed { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
 
-  /* MODAL */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
   .modal-overlay.open { opacity: 1; pointer-events: all; }
   .modal { background: var(--surface); border: 1px solid var(--border2); border-radius: 14px; padding: 26px; width: 480px; max-width: 94vw; transform: translateY(12px); transition: transform 0.2s; }
@@ -136,7 +140,6 @@
   .modal-summary-row .val.ok { color: var(--green); }
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
 
-  /* REDEMPTION HISTORY */
   .redeem-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid rgba(201,168,76,0.06); }
   .redeem-item:last-child { border-bottom: none; }
   .redeem-client { font-size: 13px; color: var(--text); font-weight: 500; }
@@ -150,6 +153,12 @@
   .history-date { font-size: 11px; color: var(--text-muted); min-width: 90px; }
   .history-file { font-size: 13px; flex: 1; padding: 0 12px; }
   .history-pts { font-family: 'Bebas Neue', sans-serif; font-size: 15px; color: var(--green); }
+
+  /* Badges de sede (visibles en vista "Todas") */
+  .sede-badge { display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; vertical-align: middle; margin-left: 6px; }
+  .sede-badge-univ { background: rgba(74,144,217,0.15); color: var(--univ); border: 1px solid rgba(74,144,217,0.3); }
+  .sede-badge-indep { background: rgba(217,132,74,0.15); color: var(--indep); border: 1px solid rgba(217,132,74,0.3); }
+  .sede-badge-sin { background: rgba(154,144,128,0.1); color: var(--text-muted); border: 1px solid var(--border); }
 
   .codes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
   .code-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
@@ -179,7 +188,6 @@
 </head>
 <body>
 
-<!-- LOADING -->
 <div id="loadingOverlay">
   <div class="loading-spinner"></div>
   <div class="loading-text">Cargando datos...</div>
@@ -202,7 +210,6 @@
 </header>
 
 <div class="main">
-  <!-- CONFIG BANNER (se muestra si falta configurar Supabase) -->
   <div id="configBanner">
     <h3>⚠️ Configuración requerida</h3>
     <p>
@@ -237,6 +244,11 @@
       <div class="log-badge">Importaciones: <span id="logCount">0</span></div>
       <div class="log-badge">Último archivo: <span id="logLast">—</span></div>
       <div class="log-badge">Última fecha de ventas: <span id="logDate">—</span></div>
+    </div>
+    <!-- BOTONES DE SEDE (Ranking) -->
+    <div class="sede-btns" style="margin-bottom:14px">
+      <button class="btn-sede btn-sede-univ" onclick="setActiveSede('Universitaria')">Universitaria</button>
+      <button class="btn-sede btn-sede-indep" onclick="setActiveSede('Independencia')">Independencia</button>
     </div>
     <div class="section-header">
       <div class="section-title">Ranking de Clientes</div>
@@ -276,6 +288,11 @@
         <button class="btn btn-green" style="width:100%" onclick="openModal(2)">Canjear</button>
       </div>
     </div>
+    <!-- BOTONES DE SEDE (Premios) -->
+    <div class="sede-btns" style="margin-bottom:14px">
+      <button class="btn-sede btn-sede-univ" onclick="setActiveSede('Universitaria')">Universitaria</button>
+      <button class="btn-sede btn-sede-indep" onclick="setActiveSede('Independencia')">Independencia</button>
+    </div>
     <div class="section-header">
       <div class="section-title">Saldo por Cliente</div>
       <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="searchPremios" placeholder="Buscar cliente..." oninput="renderPrizesTable()"></div>
@@ -299,6 +316,21 @@
 
   <!-- TAB CONFIG -->
   <div id="tab-config" class="tab-panel">
+    <div class="section-header"><div class="section-title">Sedes</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:22px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="background:rgba(74,144,217,0.08);border:1px solid rgba(74,144,217,0.25);border-radius:8px;padding:14px 16px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1.5px;color:var(--univ);margin-bottom:8px;">Universitaria</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Series identificadas:</div>
+          <div style="font-size:13px;color:var(--text);font-weight:500;">B001 · F001</div>
+        </div>
+        <div style="background:rgba(217,132,74,0.08);border:1px solid rgba(217,132,74,0.25);border-radius:8px;padding:14px 16px;">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1.5px;color:var(--indep);margin-bottom:8px;">Independencia</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">Series identificadas:</div>
+          <div style="font-size:13px;color:var(--text);font-weight:500;">B002 · B004 · F002 · F004</div>
+        </div>
+      </div>
+    </div>
     <div class="section-header"><div class="section-title">Códigos de Producto</div></div>
     <div class="codes-grid">
       <div class="code-card">
@@ -376,13 +408,11 @@
 <script>
 // ============================================================
 // CONFIGURACIÓN SUPABASE
-// Reemplaza estos valores con los de tu proyecto en supabase.com
 // ============================================================
 const SUPABASE_URL = 'https://yyfrtuydpotbcevlvzyl.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl5ZnJ0dXlkcG90YmNldmx2enlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzNjUxMDYsImV4cCI6MjA5NDk0MTEwNn0.2MApb2BZamuSRZpWdhcIvAimUVaT9RbtClU22jNjr2s';
 // ============================================================
 
-// Detectar si están configuradas
 const SUPABASE_CONFIGURED = !SUPABASE_URL.includes('XXXXXXXX') && !SUPABASE_KEY.includes('XXXXXXXX');
 
 // ---- SUPABASE API ----
@@ -404,38 +434,77 @@ async function sbFetch(path, options = {}) {
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
+async function sbGet(table, params='') { return sbFetch(table+(params?'?'+params:''), {method:'GET',prefer:''}); }
+async function sbInsert(table, data)   { return sbFetch(table, {method:'POST', body:JSON.stringify(data)}); }
+async function sbUpdate(table, filter, data) { return sbFetch(table+'?'+filter, {method:'PATCH', body:JSON.stringify(data)}); }
+async function sbDelete(table, filter) { return sbFetch(table+'?'+filter, {method:'DELETE', prefer:''}); }
 
-async function sbGet(table, params = '') {
-  return sbFetch(table + (params ? '?' + params : ''), { method: 'GET', prefer: '' });
-}
-async function sbInsert(table, data) {
-  return sbFetch(table, { method: 'POST', body: JSON.stringify(data) });
-}
-async function sbUpsert(table, data, onConflict) {
-  return sbFetch(table + (onConflict ? '?on_conflict=' + onConflict : ''), {
-    method: 'POST',
-    body: JSON.stringify(data),
-    prefer: 'resolution=merge-duplicates,return=representation'
-  });
-}
-async function sbUpdate(table, filter, data) {
-  return sbFetch(table + '?' + filter, { method: 'PATCH', body: JSON.stringify(data) });
-}
-async function sbDelete(table, filter) {
-  return sbFetch(table + '?' + filter, { method: 'DELETE', prefer: '' });
-}
-
-// ---- STATE (in-memory cache) ----
+// ---- CONSTANTS ----
 const CODES_4 = new Set(['KA701801YINO','K1A781801YAMB','KA1801CGPS','KA1801CMAM','KA1801TBUR','KA1801ECCTG','KA1801TAVE','KA1801EPOS']);
 const CODES_8 = new Set(['VA781801YINO','VA215024401801YAMB','VA215024401801CMAM','VA215024401801ECTG','VA78181TAVE','VAS7081801EPOS']);
 const REQ_COM = 0.0015;
+
+// Mapeo serie → sede. Se detecta buscando en TODAS las celdas de la fila.
+const SERIE_SEDES = {
+  'B001': 'Universitaria', 'F001': 'Universitaria',
+  'B002': 'Independencia', 'B004': 'Independencia',
+  'F002': 'Independencia', 'F004': 'Independencia'
+};
+
 const PRIZES = [
   { id: 0, name: 'Camiseta Argentina', emoji: '🇦🇷', cost: 30 },
   { id: 1, name: 'Camiseta Brasilera', emoji: '🇧🇷', cost: 30 },
   { id: 2, name: 'Botella Pelikano',   emoji: '🍶',  cost: 20 }
 ];
+
+// ---- STATE ----
+// state.clients keyed by "name||sede"
 let currentPrizeId = 0;
+let activeSede = null; // null = todas, 'Universitaria', 'Independencia'
 let state = { clients: {}, history: [], redemptions: [] };
+
+// Busca en todas las celdas de la fila si algún valor EMPIEZA con una serie conocida
+function detectSedeFromRow(row) {
+  for (const cell of row) {
+    if (!cell) continue;
+    const val = String(cell).trim().toUpperCase();
+    for (const [serie, sede] of Object.entries(SERIE_SEDES)) {
+      if (val.startsWith(serie)) return sede;
+    }
+  }
+  return 'sin sede';
+}
+
+function sedeBadgeHtml(sede) {
+  if (sede === 'Universitaria') return '<span class="sede-badge sede-badge-univ">Universitaria</span>';
+  if (sede === 'Independencia') return '<span class="sede-badge sede-badge-indep">Independencia</span>';
+  return '';
+}
+
+function getFilteredClients() {
+  const all = Object.values(state.clients);
+  return activeSede ? all.filter(c => c.sede === activeSede) : all;
+}
+
+function getFilteredRedemptions() {
+  return activeSede ? state.redemptions.filter(r => r.sede === activeSede) : state.redemptions;
+}
+
+// ---- SEDE FILTER ----
+function setActiveSede(sede) {
+  activeSede = (activeSede === sede) ? null : sede; // toggle
+  // Actualizar todos los botones de sede en ambas tabs
+  document.querySelectorAll('.btn-sede-univ').forEach(b => {
+    b.classList.toggle('active-univ', activeSede === 'Universitaria');
+  });
+  document.querySelectorAll('.btn-sede-indep').forEach(b => {
+    b.classList.toggle('active-indep', activeSede === 'Independencia');
+  });
+  renderAll();
+  renderPrizesTable();
+  renderPrizeCards();
+  renderRedemptions();
+}
 
 // ---- LOAD FROM SUPABASE ----
 async function loadFromSupabase() {
@@ -447,7 +516,11 @@ async function loadFromSupabase() {
 
   state.clients = {};
   (clients || []).forEach(c => {
-    state.clients[c.name] = {
+    const sede = c.sede || 'sin sede';
+    const key  = c.name + '||' + sede;
+    state.clients[key] = {
+      name:     c.name,
+      sede:     sede,
       total:    c.total    || 0,
       redeemed: c.redeemed || 0,
       pts4:     c.pts4     || 0,
@@ -462,15 +535,16 @@ async function loadFromSupabase() {
     file:           h.file_name,
     date:           new Date(h.created_at).toLocaleString('es-PE'),
     salesDate:      h.sales_date || '—',
-    pointsAdded:    h.points_added     || 0,
-    linesProcessed: h.lines_processed  || 0,
-    linesSkipped:   h.lines_skipped    || 0,
-    clientsUpdated: h.clients_updated  || 0
+    pointsAdded:    h.points_added    || 0,
+    linesProcessed: h.lines_processed || 0,
+    linesSkipped:   h.lines_skipped   || 0,
+    clientsUpdated: h.clients_updated || 0
   }));
 
   state.redemptions = (redemptions || []).map(r => ({
     id:         r.id,
     client:     r.client_name,
+    sede:       r.sede || 'sin sede',
     prizeId:    r.prize_id,
     prizeName:  r.prize_name,
     prizeEmoji: r.prize_emoji,
@@ -487,8 +561,8 @@ function switchTab(name, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   el.classList.add('active');
-  if (name === 'premios')  { renderPrizesTable(); renderPrizeCards(); }
-  if (name === 'canjes')   { renderRedemptions(); renderHistory(); }
+  if (name === 'premios') { renderPrizesTable(); renderPrizeCards(); }
+  if (name === 'canjes')  { renderRedemptions(); renderHistory(); }
 }
 
 // ---- FILE IMPORT ----
@@ -517,7 +591,7 @@ async function processFile(rows, filename) {
   for (let i = 0; i < rows.length; i++) {
     const r = rows[i]; if (!r) continue;
     const rs = r.map(c => String(c||'').toUpperCase().trim());
-    if (rs.some(c => c === 'CODIGO DE PRODUCTO' || c.includes('CODIGO DE PRODUCTO'))) {
+    if (rs.some(c => c.includes('CODIGO DE PRODUCTO'))) {
       headerIdx = i;
       rs.forEach((h, idx) => {
         if (h.includes('CODIGO DE PRODUCTO')) colMap.cp = idx;
@@ -535,7 +609,7 @@ async function processFile(rows, filename) {
   }
 
   let ptsAdded = 0, lines = 0, skipped = 0, dateStr = '—';
-  const clientDeltas = {}; // { name: { total, pts4, pts8, units4, units8 } }
+  const clientDeltas = {}; // keyed by "name||sede"
 
   for (let i = headerIdx + 1; i < rows.length; i++) {
     const row = rows[i];
@@ -555,10 +629,14 @@ async function processFile(rows, filename) {
     else if (CODES_8.has(codigo)) { pts = 8 * cantidad; type = '8'; }
     if (pts <= 0) continue;
 
-    if (!clientDeltas[razon]) clientDeltas[razon] = { total:0, pts4:0, pts8:0, units4:0, units8:0 };
-    clientDeltas[razon].total += pts;
-    if (type === '4') { clientDeltas[razon].pts4 += pts; clientDeltas[razon].units4 += cantidad; }
-    else              { clientDeltas[razon].pts8 += pts; clientDeltas[razon].units8 += cantidad; }
+    // Detectar sede escaneando toda la fila en busca del código de serie
+    const sede = detectSedeFromRow(row);
+
+    const clientKey = razon + '||' + sede;
+    if (!clientDeltas[clientKey]) clientDeltas[clientKey] = { name: razon, sede, total:0, pts4:0, pts8:0, units4:0, units8:0 };
+    clientDeltas[clientKey].total += pts;
+    if (type === '4') { clientDeltas[clientKey].pts4 += pts; clientDeltas[clientKey].units4 += cantidad; }
+    else              { clientDeltas[clientKey].pts8 += pts; clientDeltas[clientKey].units8 += cantidad; }
     ptsAdded += pts; lines++;
 
     if (colMap.fe !== undefined && row[colMap.fe] && dateStr === '—') {
@@ -568,39 +646,39 @@ async function processFile(rows, filename) {
   }
 
   if (lines === 0) {
-    showToast(`Importado · Sin filas con los códigos + comisión 0.0015 (${skipped} omitidas)`, 'error'); return;
+    showToast(`Sin filas válidas · ${skipped} omitidas por comisión/tipo de venta`, 'error'); return;
   }
 
   showToast('Guardando en base de datos...', '');
   try {
-    // Upsert all clients (merge with existing points)
-    for (const [name, delta] of Object.entries(clientDeltas)) {
-      const existing = state.clients[name];
+    for (const [key, delta] of Object.entries(clientDeltas)) {
+      const existing = state.clients[key];
       if (existing) {
-        // Update existing client
-        await sbUpdate('clients', 'name=eq.' + encodeURIComponent(name), {
-          total:  existing.total  + delta.total,
-          pts4:   existing.pts4   + delta.pts4,
-          pts8:   existing.pts8   + delta.pts8,
-          units4: existing.units4 + delta.units4,
-          units8: existing.units8 + delta.units8,
-          updated_at: new Date().toISOString()
-        });
+        await sbUpdate('clients',
+          'name=eq.' + encodeURIComponent(delta.name) + '&sede=eq.' + encodeURIComponent(delta.sede),
+          {
+            total:  existing.total  + delta.total,
+            pts4:   existing.pts4   + delta.pts4,
+            pts8:   existing.pts8   + delta.pts8,
+            units4: existing.units4 + delta.units4,
+            units8: existing.units8 + delta.units8,
+            updated_at: new Date().toISOString()
+          }
+        );
       } else {
-        // Insert new client
         await sbInsert('clients', {
-          name,
-          total:  delta.total,
+          name:     delta.name,
+          sede:     delta.sede,
+          total:    delta.total,
           redeemed: 0,
-          pts4:   delta.pts4,
-          pts8:   delta.pts8,
-          units4: delta.units4,
-          units8: delta.units8
+          pts4:     delta.pts4,
+          pts8:     delta.pts8,
+          units4:   delta.units4,
+          units8:   delta.units8
         });
       }
     }
 
-    // Insert import history
     await sbInsert('import_history', {
       file_name:       filename,
       sales_date:      dateStr,
@@ -622,7 +700,7 @@ async function processFile(rows, filename) {
 function renderAll() { renderStats(); renderTable(); renderPrizeCards(); }
 
 function renderStats() {
-  const cv = Object.values(state.clients);
+  const cv = getFilteredClients();
   const tp = cv.reduce((s,c) => s + c.total, 0);
   const tr = cv.reduce((s,c) => s + (c.redeemed||0), 0);
   document.getElementById('hTotalPts').textContent      = Math.round(tp).toLocaleString('es');
@@ -639,47 +717,59 @@ function renderStats() {
 
 function renderTable() {
   const q = document.getElementById('searchInput').value.toLowerCase();
-  const entries = Object.entries(state.clients).filter(([n]) => n.toLowerCase().includes(q)).sort((a,b) => b[1].total - a[1].total);
+  const filtered = getFilteredClients();
+  const entries  = filtered.filter(c => c.name.toLowerCase().includes(q)).sort((a,b) => b.total - a.total);
   if (entries.length === 0) {
-    document.getElementById('tableContainer').innerHTML = `<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-title">${Object.keys(state.clients).length===0?'Sin datos aún':'Sin resultados'}</div><div class="empty-text">${Object.keys(state.clients).length===0?'Importa tu primer archivo Excel':'Sin coincidencias'}</div></div>`;
+    const noData = Object.keys(state.clients).length === 0;
+    document.getElementById('tableContainer').innerHTML = `<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-title">${noData?'Sin datos aún':'Sin resultados'}</div><div class="empty-text">${noData?'Importa tu primer archivo Excel':'Sin coincidencias para el filtro seleccionado'}</div></div>`;
     return;
   }
   const medals = ['🥇','🥈','🥉'];
-  const rows = entries.map(([name, d], i) => {
-    const rank = i+1;
-    const rd = rank<=3 ? `<span style="font-size:16px">${medals[rank-1]}</span>` : `<span class="rank-num">${rank}</span>`;
-    const p4 = d.pts4>0 ? `<span class="pill pill-4">4pts ×${Math.round(d.units4||0)}u</span>` : '';
-    const p8 = d.pts8>0 ? `<span class="pill pill-8">8pts ×${Math.round(d.units8||0)}u</span>` : '';
-    const av = Math.max(0, d.total-(d.redeemed||0));
-    return `<tr><td style="width:42px;text-align:center">${rd}</td><td><div class="client-name">${name}</div></td><td>${p4}${p8}</td><td style="text-align:right"><div class="points-val">${Math.round(d.total).toLocaleString('es')}</div><div class="points-label">TOTAL</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div><div class="points-label">DISPONIBLE</div></td></tr>`;
+  const showBadge = !activeSede;
+  const rows = entries.map((d, i) => {
+    const rank  = i + 1;
+    const rd    = rank <= 3 ? `<span style="font-size:16px">${medals[rank-1]}</span>` : `<span class="rank-num">${rank}</span>`;
+    const p4    = d.pts4 > 0 ? `<span class="pill pill-4">4pts ×${Math.round(d.units4||0)}u</span>` : '';
+    const p8    = d.pts8 > 0 ? `<span class="pill pill-8">8pts ×${Math.round(d.units8||0)}u</span>` : '';
+    const av    = Math.max(0, d.total - (d.redeemed||0));
+    const badge = showBadge ? sedeBadgeHtml(d.sede) : '';
+    return `<tr><td style="width:42px;text-align:center">${rd}</td><td><div class="client-name">${d.name}${badge}</div></td><td>${p4}${p8}</td><td style="text-align:right"><div class="points-val">${Math.round(d.total).toLocaleString('es')}</div><div class="points-label">TOTAL</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div><div class="points-label">DISPONIBLE</div></td></tr>`;
   }).join('');
   document.getElementById('tableContainer').innerHTML = `<table class="ranking-table"><thead><tr><th style="text-align:center">#</th><th>Razón Social</th><th>Detalle</th><th class="right">Puntos totales</th><th class="right">Disponibles</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 function renderPrizesTable() {
   const q = document.getElementById('searchPremios').value.toLowerCase();
-  const entries = Object.entries(state.clients).filter(([n]) => n.toLowerCase().includes(q)).sort((a,b) => Math.max(0,b[1].total-(b[1].redeemed||0)) - Math.max(0,a[1].total-(a[1].redeemed||0)));
-  if (entries.length === 0) { document.getElementById('prizesTableContainer').innerHTML = `<div class="empty-state" style="padding:36px"><div class="empty-text">Sin datos</div></div>`; return; }
-  // Canjes reales por cliente y tipo de premio
-  const rByClient = {};
+  const filtered = getFilteredClients();
+  const entries  = filtered.filter(c => c.name.toLowerCase().includes(q)).sort((a,b) => Math.max(0,b.total-(b.redeemed||0)) - Math.max(0,a.total-(a.redeemed||0)));
+  if (entries.length === 0) {
+    document.getElementById('prizesTableContainer').innerHTML = `<div class="empty-state" style="padding:36px"><div class="empty-text">Sin datos</div></div>`; return;
+  }
+  const rByKey = {};
   state.redemptions.forEach(r => {
-    if (!rByClient[r.client]) rByClient[r.client] = {};
-    rByClient[r.client][r.prizeId] = (rByClient[r.client][r.prizeId] || 0) + r.qty;
+    const k = r.client + '||' + (r.sede || 'sin sede');
+    if (!rByKey[k]) rByKey[k] = {};
+    rByKey[k][r.prizeId] = (rByKey[k][r.prizeId] || 0) + r.qty;
   });
-  const rows = entries.map(([name, d]) => {
-    const av = Math.max(0, d.total-(d.redeemed||0));
-    const cr = rByClient[name] || {};
-    const cA = cr[0] || 0, cB = cr[1] || 0, cBt = cr[2] || 0;
-    const safeName = name.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
-    return `<tr><td><div class="client-name">${name}</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div></td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cA>0?'🇦🇷 ×'+cA:'—'}</td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cB>0?'🇧🇷 ×'+cB:'—'}</td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cBt>0?'🍶 ×'+cBt:'—'}</td><td style="text-align:right"><button class="btn btn-gold btn-sm" onclick="openModalForClient('${safeName}')">Canjear</button></td></tr>`;
+  const showBadge = !activeSede;
+  const rows = entries.map(d => {
+    const av  = Math.max(0, d.total - (d.redeemed||0));
+    const key = d.name + '||' + d.sede;
+    const cr  = rByKey[key] || {};
+    const cA  = cr[0]||0, cB = cr[1]||0, cBt = cr[2]||0;
+    const sN  = d.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    const sS  = d.sede.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    const badge = showBadge ? sedeBadgeHtml(d.sede) : '';
+    return `<tr><td><div class="client-name">${d.name}${badge}</div></td><td style="text-align:right"><div class="points-available">${Math.round(av).toLocaleString('es')}</div></td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cA>0?'🇦🇷 ×'+cA:'—'}</td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cB>0?'🇧🇷 ×'+cB:'—'}</td><td style="text-align:center;font-size:12px;color:var(--text-muted)">${cBt>0?'🍶 ×'+cBt:'—'}</td><td style="text-align:right"><button class="btn btn-gold btn-sm" onclick="openModalForClient('${sN}','${sS}')">Canjear</button></td></tr>`;
   }).join('');
   document.getElementById('prizesTableContainer').innerHTML = `<table class="ranking-table"><thead><tr><th>Razón Social</th><th class="right">Pts disponibles</th><th class="center">🇦🇷 Canjeadas</th><th class="center">🇧🇷 Canjeadas</th><th class="center">🍶 Canjeadas</th><th class="right">Acción</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 function renderPrizeCards() {
+  const filteredR = getFilteredRedemptions();
   PRIZES.forEach(p => {
-    const count = state.redemptions.filter(r=>r.prizeId===p.id).reduce((s,r)=>s+r.qty,0);
-    const el = document.getElementById('redeemed-'+p.id);
+    const count = filteredR.filter(r => r.prizeId === p.id).reduce((s,r) => s + r.qty, 0);
+    const el = document.getElementById('redeemed-' + p.id);
     if (el) el.textContent = count + ' canjeadas';
   });
 }
@@ -692,36 +782,39 @@ function selectModalPrize(id, el) {
   updateModalSummary();
 }
 
-function openModal(prizeId, clientName) {
+function openModal(prizeId, preselectedKey) {
   currentPrizeId = prizeId;
-  document.querySelectorAll('.modal-prize-tab').forEach((t,i) => t.classList.toggle('active', i===prizeId));
+  document.querySelectorAll('.modal-prize-tab').forEach((t,i) => t.classList.toggle('active', i === prizeId));
   document.getElementById('modalQty').value = 1;
   const sel = document.getElementById('modalClient');
   sel.innerHTML = '<option value="">— Seleccionar cliente —</option>';
-  Object.entries(state.clients).sort((a,b)=>a[0].localeCompare(b[0])).forEach(([name, d]) => {
-    const av = Math.max(0, d.total-(d.redeemed||0));
+  const toShow = getFilteredClients().sort((a,b) => a.name.localeCompare(b.name));
+  toShow.forEach(d => {
+    const av  = Math.max(0, d.total - (d.redeemed||0));
+    const key = d.name + '||' + d.sede;
     const opt = document.createElement('option');
-    opt.value = name;
-    opt.textContent = `${name}  (${Math.round(av)} pts disp.)`;
+    opt.value = key;
+    const sedeLabel = activeSede ? '' : ` [${d.sede}]`;
+    opt.textContent = `${d.name}${sedeLabel}  (${Math.round(av)} pts)`;
     sel.appendChild(opt);
   });
-  if (clientName) sel.value = clientName;
+  if (preselectedKey) sel.value = preselectedKey;
   document.getElementById('modalSummary').style.display = 'none';
   document.getElementById('modalOverlay').classList.add('open');
   updateModalSummary();
 }
 
-function openModalForClient(name) { openModal(0, name); }
+function openModalForClient(name, sede) { openModal(0, name + '||' + sede); }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
 
 function updateModalSummary() {
-  const client = document.getElementById('modalClient').value;
+  const clientKey = document.getElementById('modalClient').value;
   const qty    = parseInt(document.getElementById('modalQty').value) || 0;
   const prize  = PRIZES[currentPrizeId];
   const summary = document.getElementById('modalSummary');
-  if (!client || qty < 1) { summary.style.display='none'; return; }
-  const d = state.clients[client]; if (!d) { summary.style.display='none'; return; }
-  const av   = Math.max(0, d.total-(d.redeemed||0));
+  if (!clientKey || qty < 1) { summary.style.display = 'none'; return; }
+  const d = state.clients[clientKey]; if (!d) { summary.style.display = 'none'; return; }
+  const av   = Math.max(0, d.total - (d.redeemed||0));
   const cost = prize.cost * qty;
   const after = av - cost;
   document.getElementById('ms-current').textContent = Math.round(av) + ' pts';
@@ -735,27 +828,29 @@ function updateModalSummary() {
 
 async function confirmRedeem() {
   if (!SUPABASE_CONFIGURED) { showToast('Configura Supabase primero', 'error'); return; }
-  const client = document.getElementById('modalClient').value;
+  const clientKey = document.getElementById('modalClient').value;
   const qty    = parseInt(document.getElementById('modalQty').value) || 0;
   const prize  = PRIZES[currentPrizeId];
-  if (!client || qty < 1) { showToast('Selecciona cliente y cantidad', 'error'); return; }
-  const d  = state.clients[client];
-  const av = Math.max(0, d.total-(d.redeemed||0));
+  if (!clientKey || qty < 1) { showToast('Selecciona cliente y cantidad', 'error'); return; }
+  const d = state.clients[clientKey];
+  if (!d) { showToast('Cliente no encontrado', 'error'); return; }
+  const av   = Math.max(0, d.total - (d.redeemed||0));
   const cost = prize.cost * qty;
   if (av < cost) { showToast('Puntos insuficientes', 'error'); return; }
 
   document.getElementById('modalConfirmBtn').disabled = true;
   try {
     const newRedeemed = (d.redeemed||0) + cost;
-    const ptsAfter = Math.round(av - cost);
+    const ptsAfter    = Math.round(av - cost);
 
-    await sbUpdate('clients', 'name=eq.' + encodeURIComponent(client), {
-      redeemed: newRedeemed,
-      updated_at: new Date().toISOString()
-    });
+    await sbUpdate('clients',
+      'name=eq.' + encodeURIComponent(d.name) + '&sede=eq.' + encodeURIComponent(d.sede),
+      { redeemed: newRedeemed, updated_at: new Date().toISOString() }
+    );
 
     await sbInsert('redemptions', {
-      client_name: client,
+      client_name: d.name,
+      sede:        d.sede,
       prize_id:    prize.id,
       prize_name:  prize.name,
       prize_emoji: prize.emoji,
@@ -770,7 +865,7 @@ async function confirmRedeem() {
     renderPrizesTable();
     renderPrizeCards();
     renderRedemptions();
-    showToast(`✓ Canje registrado · ${prize.emoji} ${prize.name} ×${qty} para ${client}`, 'success');
+    showToast(`✓ Canje registrado · ${prize.emoji} ${prize.name} ×${qty} para ${d.name}`, 'success');
   } catch(err) {
     showToast('Error: ' + err.message, 'error');
     document.getElementById('modalConfirmBtn').disabled = false;
@@ -778,23 +873,28 @@ async function confirmRedeem() {
 }
 
 function renderRedemptions() {
-  const rd = state.redemptions;
-  if (rd.length===0) {
-    document.getElementById('redemptionContainer').innerHTML=`<div class="empty-state" style="padding:36px"><div class="empty-icon">🎁</div><div class="empty-title">Sin canjes aún</div></div>`; return;
+  const rd = getFilteredRedemptions();
+  if (rd.length === 0) {
+    document.getElementById('redemptionContainer').innerHTML = `<div class="empty-state" style="padding:36px"><div class="empty-icon">🎁</div><div class="empty-title">Sin canjes aún</div></div>`; return;
   }
-  document.getElementById('redemptionContainer').innerHTML = rd.map(r => `<div class="redeem-item"><div><div class="redeem-client">${r.prizeEmoji} ${r.prizeName} ×${r.qty} — <span style="color:var(--gold)">${r.client}</span></div><div class="redeem-detail">${r.date} · Saldo tras canje: ${r.ptsAfter} pts</div></div><div style="display:flex;align-items:center;gap:6px"><div class="redeem-pts">-${r.cost} pts</div><button class="redeem-undo" onclick="undoRedeem('${r.id}')">↩ deshacer</button></div></div>`).join('');
+  const showBadge = !activeSede;
+  document.getElementById('redemptionContainer').innerHTML = rd.map(r => {
+    const badge = showBadge ? sedeBadgeHtml(r.sede) : '';
+    return `<div class="redeem-item"><div><div class="redeem-client">${r.prizeEmoji} ${r.prizeName} ×${r.qty} — <span style="color:var(--gold)">${r.client}</span>${badge}</div><div class="redeem-detail">${r.date} · Saldo tras canje: ${r.ptsAfter} pts</div></div><div style="display:flex;align-items:center;gap:6px"><div class="redeem-pts">-${r.cost} pts</div><button class="redeem-undo" onclick="undoRedeem('${r.id}')">↩ deshacer</button></div></div>`;
+  }).join('');
 }
 
 async function undoRedeem(id) {
-  const r = state.redemptions.find(x=>x.id===id); if (!r) return;
+  const r = state.redemptions.find(x => x.id === id); if (!r) return;
   if (!confirm(`¿Deshacer el canje de ${r.prizeName} ×${r.qty} para ${r.client}? Se devolverán ${r.cost} pts.`)) return;
   try {
-    const d = state.clients[r.client];
+    const clientKey = r.client + '||' + (r.sede || 'sin sede');
+    const d = state.clients[clientKey];
     if (d) {
-      await sbUpdate('clients', 'name=eq.' + encodeURIComponent(r.client), {
-        redeemed: Math.max(0, (d.redeemed||0) - r.cost),
-        updated_at: new Date().toISOString()
-      });
+      await sbUpdate('clients',
+        'name=eq.' + encodeURIComponent(r.client) + '&sede=eq.' + encodeURIComponent(r.sede || 'sin sede'),
+        { redeemed: Math.max(0, (d.redeemed||0) - r.cost), updated_at: new Date().toISOString() }
+      );
     }
     await sbDelete('redemptions', 'id=eq.' + r.id);
     await loadFromSupabase();
@@ -809,10 +909,12 @@ async function undoRedeem(id) {
 }
 
 function renderHistory() {
-  if (state.history.length===0) {
-    document.getElementById('historyContainer').innerHTML=`<div class="empty-state" style="padding:28px"><div class="empty-text">No hay importaciones registradas</div></div>`; return;
+  if (state.history.length === 0) {
+    document.getElementById('historyContainer').innerHTML = `<div class="empty-state" style="padding:28px"><div class="empty-text">No hay importaciones registradas</div></div>`; return;
   }
-  document.getElementById('historyContainer').innerHTML = state.history.map(h=>`<div class="history-item"><div class="history-date">${h.date}</div><div class="history-file"><div style="font-size:13px;color:var(--text)">${h.file}</div><div style="font-size:11px;color:var(--text-muted)">Ventas: ${h.salesDate} · ${h.linesProcessed} filas · ${h.clientsUpdated} clientes · ${h.linesSkipped||0} omitidas por comisión</div></div><div class="history-pts">+${Math.round(h.pointsAdded).toLocaleString('es')} pts</div></div>`).join('');
+  document.getElementById('historyContainer').innerHTML = state.history.map(h =>
+    `<div class="history-item"><div class="history-date">${h.date}</div><div class="history-file"><div style="font-size:13px;color:var(--text)">${h.file}</div><div style="font-size:11px;color:var(--text-muted)">Ventas: ${h.salesDate} · ${h.linesProcessed} filas · ${h.clientsUpdated} clientes · ${h.linesSkipped||0} omitidas por comisión</div></div><div class="history-pts">+${Math.round(h.pointsAdded).toLocaleString('es')} pts</div></div>`
+  ).join('');
 }
 
 async function clearAll() {
@@ -832,11 +934,12 @@ async function clearAll() {
 }
 
 function showToast(msg, type='') {
-  const t = document.getElementById('toast'); t.textContent=msg; t.className='toast show '+type;
-  clearTimeout(t._timer); t._timer = setTimeout(()=>{ t.className='toast'; }, 4000);
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show ' + type;
+  clearTimeout(t._timer); t._timer = setTimeout(() => { t.className = 'toast'; }, 4000);
 }
 
-document.getElementById('modalOverlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
 // ---- INIT ----
 async function init() {
