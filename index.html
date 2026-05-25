@@ -223,6 +223,7 @@
     <button class="tab active" onclick="switchTab('ranking',this)">🏆 Ranking</button>
     <button class="tab" onclick="switchTab('premios',this)">🎁 Canjear Premios</button>
     <button class="tab" onclick="switchTab('canjes',this)">📋 Historial Canjes</button>
+    <button class="tab" onclick="switchTab('importaciones',this)">📥 Importaciones</button>
     <button class="tab" onclick="switchTab('config',this)">⚙️ Referencias</button>
   </div>
 
@@ -308,7 +309,11 @@
     <div class="table-wrap"><div id="redemptionContainer">
       <div class="empty-state" style="padding:36px"><div class="empty-icon">🎁</div><div class="empty-title">Sin canjes aún</div></div>
     </div></div>
-    <div class="section-header" style="margin-top:22px"><div class="section-title">Historial de Importaciones</div></div>
+  </div>
+
+  <!-- TAB IMPORTACIONES -->
+  <div id="tab-importaciones" class="tab-panel">
+    <div class="section-header"><div class="section-title">Historial de Importaciones</div></div>
     <div class="table-wrap"><div id="historyContainer">
       <div class="empty-state" style="padding:28px"><div class="empty-text">No hay importaciones registradas</div></div>
     </div></div>
@@ -561,8 +566,9 @@ function switchTab(name, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   el.classList.add('active');
-  if (name === 'premios') { renderPrizesTable(); renderPrizeCards(); }
-  if (name === 'canjes')  { renderRedemptions(); renderHistory(); }
+  if (name === 'premios')       { renderPrizesTable(); renderPrizeCards(); }
+  if (name === 'canjes')        { renderRedemptions(); }
+  if (name === 'importaciones') { renderHistory(); }
 }
 
 // ---- FILE IMPORT ----
